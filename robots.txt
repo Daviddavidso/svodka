@@ -1,0 +1,11 @@
+# Служебные файлы панели не должны попадать в поиск ни при каких условиях.
+User-agent: *
+Disallow: /panel.html
+Disallow: /api.php
+Disallow: /check.php
+Disallow: /data.php
+Allow: /
+
+# Строку Sitemap добавьте, когда появится домен и будет снят noindex
+# из index.html:
+# Sitemap: https://ваш-домен/sitemap.xml

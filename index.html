@@ -1,0 +1,476 @@
+<!doctype html>
+<html lang="ru">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Займы, дебетовые и кредитные карты, кредиты наличными — СВОДКА</title>
+<meta name="description" content="Сводка предложений банков и МФО: займы на карту, дебетовые и кредитные карты, кредиты наличными. Оформление онлайн на сайте партнёра.">
+
+<!-- Страница закрыта от поисковиков намеренно. Две причины: партнёрские
+     ссылки ещё не подключены, и в маркировке рекламы пока нет ни erid, ни
+     наименования рекламодателя с ИНН. Появятся ссылки с токенами — удалите
+     строку ниже, и сайт можно индексировать. -->
+<meta name="robots" content="noindex, nofollow">
+
+<link rel="icon" href="favicon.svg" type="image/svg+xml">
+<meta name="theme-color" content="#F0EFEA">
+<!-- Тема только светлая: без этого при системной тёмной теме браузер
+     перекрашивает свои же элементы формы — списки, чекбоксы, автозаполнение,
+     и весь просчитанный контраст полей перестаёт действовать -->
+<meta name="color-scheme" content="light">
+
+<meta property="og:type" content="website">
+<meta property="og:site_name" content="СВОДКА">
+<meta property="og:locale" content="ru_RU">
+<meta property="og:title" content="СВОДКА — финансовые предложения одним списком">
+<meta property="og:description" content="Займы на карту, дебетовые и кредитные карты, кредиты наличными в одной сводке. Оформление онлайн на сайте партнёра.">
+
+<!-- Кириллические сабсеты — они нужны первому экрану -->
+<link rel="preload" href="fonts/golos-600-cyrillic.woff2" as="font" type="font/woff2" crossorigin>
+<link rel="preload" href="fonts/golos-400-cyrillic.woff2" as="font" type="font/woff2" crossorigin>
+<link rel="stylesheet" href="fonts/fonts.css?v=1">
+<link rel="stylesheet" href="styles.css?v=1">
+
+<!-- Класс ставится здесь, а не в script.js: скрывать блоки до появления можно
+     только когда скрипт точно работает, и решать это надо ДО первой отрисовки,
+     иначе виден обратный FOUC -->
+<script>document.documentElement.className += ' js-reveal';</script>
+</head>
+<body>
+
+<a class="skip-link" href="#main">Перейти к основному содержимому</a>
+
+<!-- Вертикальная модульная сетка — чистая декорация -->
+<div class="grid-lines" aria-hidden="true">
+  <span></span><span></span><span></span><span></span>
+</div>
+
+<header class="site-header">
+  <div class="shell site-header__inner">
+    <a class="brand" href="#main">
+      <span class="brand__mark" aria-hidden="true">С</span>
+      <span class="brand__word">СВОДКА</span>
+    </a>
+
+    <nav class="nav" aria-label="Разделы сайта">
+      <ul class="nav__list" role="list">
+        <li><a href="#offers">Каталог</a></li>
+        <li><a href="#how">Как это работает</a></li>
+        <li><a href="#faq">Вопросы</a></li>
+        <li><a href="#lead">Заявка</a></li>
+      </ul>
+    </nav>
+
+    <a class="btn btn--dark btn--sm site-header__cta" href="#offers">
+      Смотреть каталог
+      <svg class="btn__arrow" viewBox="0 0 16 16" aria-hidden="true" focusable="false"><path d="M2 8h11M9 4l4 4-4 4" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/></svg>
+    </a>
+  </div>
+</header>
+
+<main id="main" tabindex="-1">
+
+  <!-- ═══════════════════════ ПЕРВЫЙ ЭКРАН ═══════════════════════ -->
+  <!-- div, а не section: именованных областей на странице должно быть
+       немного, иначе навигация по ориентирам превращается в кашу -->
+  <div class="hero">
+    <div class="shell">
+
+      <!-- Служебная строка — часть оформления. Для скринридера она скрыта:
+           иначе перед каждым заголовком звучало бы «ноль один слэш сводка» -->
+      <p class="meta-row" aria-hidden="true">
+        <span class="meta">01 / Сводка</span>
+        <span class="meta meta--center">Предложения банков и МФО</span>
+        <span class="meta">2026</span>
+      </p>
+
+      <div class="hero__grid">
+        <div class="hero__text">
+          <p class="pill">
+            <span class="pill__dot" aria-hidden="true"></span>
+            <span id="tagline">Финансовые предложения банков и МФО — одним списком</span>
+          </p>
+
+          <!-- Строки разбиты явно: при автопереносе смена размера шрифта
+               роняла «в одной сводке» на строку выше, и заголовок становился
+               заметно шире колонки -->
+          <h1 class="hero__title">
+            <span class="hero__line">Деньги,</span>
+            <span class="hero__line">карты и займы —</span>
+            <span class="hero__line hero__line--accent">в одной сводке</span>
+          </h1>
+
+          <p class="hero__lead">
+            Займы на карту, дебетовые и кредитные карты, кредиты наличными.
+            Всё собрано в один список, чтобы не открывать сорок сайтов подряд.
+          </p>
+
+          <div class="hero__actions">
+            <a class="btn btn--dark" href="#offers">
+              Смотреть каталог
+              <svg class="btn__arrow" viewBox="0 0 16 16" aria-hidden="true" focusable="false"><path d="M2 8h11M9 4l4 4-4 4" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/></svg>
+            </a>
+            <a class="btn btn--ghost" href="#how">Как это работает</a>
+          </div>
+        </div>
+
+        <!-- Сводка по разделам: те же числа, что на кнопках фильтра.
+             Строки — ссылки: нажатие открывает нужный раздел каталога -->
+        <div class="summary">
+          <h2 class="summary__title" id="summary-title">Что сейчас в каталоге</h2>
+          <ul class="summary__rows" id="summary-rows" role="list" aria-labelledby="summary-title"><!-- из data.js --></ul>
+          <ul class="summary__stats" id="summary-stats" role="list"><!-- из data.js --></ul>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ═══════════════════════ ЛЕНТА ПАРТНЁРОВ ═══════════════════════ -->
+  <div class="ticker" role="group" aria-label="Партнёры каталога">
+    <!-- Кнопка стоит в разметке перед лентой: до движущегося содержимого
+         с клавиатуры нужно добраться раньше, чем оно уедет. Визуально её
+         возвращает под ленту order в CSS. -->
+    <button type="button" class="ticker__toggle" id="ticker-toggle">
+      Остановить движение
+    </button>
+    <div class="ticker__box" id="ticker-box">
+      <ul class="ticker__track" id="ticker" role="list"><!-- из data.js --></ul>
+    </div>
+  </div>
+
+  <!-- ═══════════════════════ КАТАЛОГ ═══════════════════════ -->
+  <section class="section" id="offers" aria-labelledby="offers-title" tabindex="-1">
+    <div class="shell">
+      <p class="meta-row meta-row--section" aria-hidden="true">
+        <span class="meta">02 / Каталог</span>
+        <span class="meta">Обновляется вручную</span>
+      </p>
+
+      <div class="section__head">
+        <h2 class="section__title" id="offers-title">Предложения</h2>
+        <p class="section__lead">
+          Каждая карточка ведёт на официальный сайт банка или МФО.
+          Мы ничего не продаём и не берём с вас комиссию.
+        </p>
+      </div>
+
+      <div class="filters">
+        <div class="filters__row" role="group" aria-label="Фильтр по разделам" id="filters"><!-- из data.js --></div>
+        <!-- Видимый счётчик и озвучиваемый статус — разные узлы. Живой регион
+             стоит в разметке с самого начала и пуст, пишется только в ответ на
+             нажатие фильтра: тогда нечего глушить при загрузке страницы. -->
+        <p class="filters__count" id="offers-count"></p>
+        <p class="visually-hidden" id="offers-status" role="status" aria-atomic="true"></p>
+      </div>
+
+      <p class="offers__note">Все предложения открываются в новой вкладке на сайте партнёра.</p>
+      <p class="offers__pending" id="offers-pending" hidden></p>
+
+      <ul class="offers" id="offers-grid" role="list"><!-- из data.js --></ul>
+      <!-- Пустое состояние живёт вне списка: внутри оно читалось бы как
+           «список, один элемент» -->
+      <p class="offers__empty" id="offers-empty" hidden></p>
+    </div>
+  </section>
+
+  <!-- ═══════════════════════ КАК ЭТО РАБОТАЕТ ═══════════════════════ -->
+  <div class="section section--alt" id="how" tabindex="-1">
+    <div class="shell">
+      <p class="meta-row meta-row--section" aria-hidden="true">
+        <span class="meta">03 / Процесс</span>
+        <span class="meta">4 шага</span>
+      </p>
+
+      <div class="section__head">
+        <h2 class="section__title">Как это работает</h2>
+        <p class="section__lead">Без регистрации, без анкет на нашей стороне и без ожидания ответа.</p>
+      </div>
+
+      <ol class="steps" role="list">
+        <li class="step reveal">
+          <!-- Номер нарисован крупно для глаза и скрыт от скринридера:
+               порядок уже несёт сам <ol> («2 из 4») -->
+          <p class="step__num" aria-hidden="true">01</p>
+          <h3 class="step__title">Выбираете раздел</h3>
+          <p class="step__text">Займ, дебетовая или кредитная карта, кредит наличными — фильтр над каталогом сузит список.</p>
+        </li>
+        <li class="step reveal">
+          <p class="step__num" aria-hidden="true">02</p>
+          <h3 class="step__title">Сравниваете условия</h3>
+          <p class="step__text">Все предложения лежат в одном списке одинаковыми карточками — видно, чем они отличаются.</p>
+        </li>
+        <li class="step reveal">
+          <p class="step__num" aria-hidden="true">03</p>
+          <h3 class="step__title">Переходите к партнёру</h3>
+          <p class="step__text">Оформление происходит на официальном сайте банка или МФО. Свои данные вы вводите только там.</p>
+        </li>
+        <li class="step reveal">
+          <p class="step__num" aria-hidden="true">04</p>
+          <h3 class="step__title">Получаете решение</h3>
+          <p class="step__text">Ответ приходит от банка или МФО. Деньги — на карту, карта — курьером или в приложении.</p>
+        </li>
+      </ol>
+    </div>
+  </div>
+
+  <!-- ═══════════════════════ ПОЧЕМУ ЗДЕСЬ ═══════════════════════ -->
+  <div class="section" id="trust" tabindex="-1">
+    <div class="shell">
+      <p class="meta-row meta-row--section" aria-hidden="true">
+        <span class="meta">04 / Принципы</span>
+        <span class="meta">Честно о том, как всё устроено</span>
+      </p>
+
+      <div class="section__head">
+        <h2 class="section__title">Почему здесь</h2>
+      </div>
+
+      <ul class="cards" role="list">
+        <li class="card reveal">
+          <h3 class="card__title">Только официальные партнёры</h3>
+          <p class="card__text">В сводке — банки с лицензией ЦБ и МФО из государственного реестра Банка России. Никаких «серых» посредников.</p>
+        </li>
+        <li class="card reveal">
+          <h3 class="card__title">Условия те же, что напрямую</h3>
+          <p class="card__text">Наценки нет. Партнёр платит нам за переход, а вы получаете стандартные условия банка — иногда с бонусом за оформление по ссылке.</p>
+        </li>
+        <li class="card reveal">
+          <h3 class="card__title">Мы не собираем ваши данные</h3>
+          <p class="card__text">Паспорт и реквизиты вы вводите на сайте партнёра. У нас нет ни анкет, ни базы клиентов, ни колл-центра.</p>
+        </li>
+      </ul>
+    </div>
+  </div>
+
+  <!-- ═══════════════════════ ВОПРОСЫ ═══════════════════════ -->
+  <section class="section section--alt" id="faq" aria-labelledby="faq-title" tabindex="-1">
+    <div class="shell shell--narrow">
+      <p class="meta-row meta-row--section" aria-hidden="true">
+        <span class="meta">05 / Вопросы</span>
+        <span class="meta">6 ответов</span>
+      </p>
+
+      <div class="section__head">
+        <h2 class="section__title" id="faq-title">Частые вопросы</h2>
+      </div>
+
+      <!-- Escape висит на этом контейнере, а не на самих панелях: панель не
+           фокусируется, нажатие приходит на кнопку — её соседа, и обработчик
+           на панели не сработал бы никогда -->
+      <div class="faq" id="faq-list">
+        <div class="faq__item">
+          <h3>
+            <button type="button" class="faq__q" aria-expanded="true" aria-controls="faq-p1">
+              <span>Пользоваться сводкой платно?</span>
+              <span class="faq__icon" aria-hidden="true"></span>
+            </button>
+          </h3>
+          <div class="faq__a" id="faq-p1">
+            <p>Нет. Для вас всё бесплатно. Мы зарабатываем на партнёрских отчислениях: банк или МФО платят за клиента, который пришёл по ссылке. На стоимость продукта это не влияет.</p>
+          </div>
+        </div>
+
+        <div class="faq__item">
+          <h3>
+            <button type="button" class="faq__q" aria-expanded="false" aria-controls="faq-p2">
+              <span>Почему в карточках нет ставок и лимитов?</span>
+              <span class="faq__icon" aria-hidden="true"></span>
+            </button>
+          </h3>
+          <div class="faq__a" id="faq-p2" hidden>
+            <p>Потому что банки меняют тарифы чаще, чем обновляется любая подборка, а часть условий зависит от вашей кредитной истории и региона. Мы показываем только то, что не устаревает, а точные цифры вы видите на сайте партнёра при оформлении.</p>
+          </div>
+        </div>
+
+        <div class="faq__item">
+          <h3>
+            <button type="button" class="faq__q" aria-expanded="false" aria-controls="faq-p3">
+              <span>Как быстро приходит решение?</span>
+              <span class="faq__icon" aria-hidden="true"></span>
+            </button>
+          </h3>
+          <div class="faq__a" id="faq-p3" hidden>
+            <p>Это зависит от банка или МФО — сроки указаны на их сайте. Мы на скорость рассмотрения не влияем и в процессе не участвуем.</p>
+          </div>
+        </div>
+
+        <div class="faq__item">
+          <h3>
+            <button type="button" class="faq__q" aria-expanded="false" aria-controls="faq-p4">
+              <span>Что делать, если отказали?</span>
+              <span class="faq__icon" aria-hidden="true"></span>
+            </button>
+          </h3>
+          <div class="faq__a" id="faq-p4" hidden>
+            <p>Отказ одного банка не означает отказ везде — скоринг у всех разный. Попробуйте другое предложение из того же раздела или оставьте заявку на подбор, и мы предложим варианты под вашу ситуацию.</p>
+          </div>
+        </div>
+
+        <div class="faq__item">
+          <h3>
+            <button type="button" class="faq__q" aria-expanded="false" aria-controls="faq-p5">
+              <span>Вы храните мои персональные данные?</span>
+              <span class="faq__icon" aria-hidden="true"></span>
+            </button>
+          </h3>
+          <div class="faq__a" id="faq-p5" hidden>
+            <p>Нет. Анкеты заполняются на стороне банка или МФО. Единственное, что можете оставить нам вы сами — имя и контакт в форме заявки, чтобы мы ответили. Эти данные не передаются третьим лицам.</p>
+          </div>
+        </div>
+
+        <div class="faq__item">
+          <h3>
+            <button type="button" class="faq__q" aria-expanded="false" aria-controls="faq-p6">
+              <span>Можно разместить в сводке своё предложение?</span>
+              <span class="faq__icon" aria-hidden="true"></span>
+            </button>
+          </h3>
+          <div class="faq__a" id="faq-p6" hidden>
+            <p>Да, каталог открыт для партнёров. Напишите через форму ниже — выберите пункт «Сотрудничество» и коротко опишите продукт и условия.</p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ═══════════════════════ ЗАЯВКА ═══════════════════════ -->
+  <section class="section" id="lead" aria-labelledby="lead-title" tabindex="-1">
+    <div class="shell shell--narrow">
+      <p class="meta-row meta-row--section" aria-hidden="true">
+        <span class="meta">06 / Заявка</span>
+        <span class="meta">Ответ в течение дня</span>
+      </p>
+
+      <div class="section__head">
+        <h2 class="section__title" id="lead-title">Не нашли подходящее — подберём</h2>
+        <p class="section__lead">
+          Опишите задачу: нужен займ, карта под кэшбэк или карта с длинным беспроцентным периодом.
+          Ответим в телеграм и пришлём два-три варианта.
+        </p>
+        <p class="section__note">
+          Все поля обязательны, кроме отмеченных словом «необязательно».
+        </p>
+      </div>
+
+      <noscript>
+        <p class="offers__pending">
+          Форма работает на JavaScript: она собирает готовое сообщение и открывает чат
+          в телеграме. Если скрипты выключены — напишите нам в телеграм напрямую,
+          ник указан в шапке чата, куда ведут все кнопки сайта.
+        </p>
+      </noscript>
+
+      <!-- method="post" не декорация: при отказе JS форма не должна унести имя
+           и телефон в адресную строку, историю браузера и логи через GET -->
+      <form class="form" id="lead-form" method="post" action="" novalidate aria-labelledby="lead-title">
+        <!-- Без role="alert": сюда уводится фокус, а живой регион вместе с
+             переводом фокуса дают наложение речи. Объявление обеспечивает
+             сам фокус. -->
+        <div class="form__summary" id="form-summary" tabindex="-1" hidden>
+          <h3 class="form__summary-title" id="form-summary-title">Форма не отправлена</h3>
+          <ul id="form-summary-list" role="list"></ul>
+        </div>
+
+        <div class="field">
+          <label class="field__label" for="lead-name">Как к вам обращаться</label>
+          <input class="field__input" type="text" id="lead-name" name="name" autocomplete="given-name"
+                 required aria-describedby="lead-name-hint lead-name-error">
+          <p class="field__hint" id="lead-name-hint">Имя или ник — минимум две буквы</p>
+          <p class="field__error" id="lead-name-error" hidden></p>
+        </div>
+
+        <div class="field">
+          <!-- autocomplete здесь намеренно off: поле принимает и телеграм-ник,
+               и телефон, а токен tel объявил бы его телефонным — браузер
+               подставил бы номер в поле, куда человек собирался вписать @ник -->
+          <label class="field__label" for="lead-contact">Телеграм или телефон</label>
+          <input class="field__input" type="text" id="lead-contact" name="contact"
+                 autocomplete="off" autocapitalize="none" spellcheck="false"
+                 required aria-describedby="lead-contact-hint lead-contact-error">
+          <p class="field__hint" id="lead-contact-hint">Например: @eduard или +7 900 000-00-00</p>
+          <p class="field__error" id="lead-contact-error" hidden></p>
+        </div>
+
+        <div class="field">
+          <label class="field__label" for="lead-topic">Что интересует</label>
+          <select class="field__input field__input--select" id="lead-topic" name="topic"
+                  required aria-describedby="lead-topic-error">
+            <option value="">Выберите из списка</option>
+            <option value="loans">Займ на карту</option>
+            <option value="debit">Дебетовая карта</option>
+            <option value="credit">Кредитная карта</option>
+            <option value="cash">Кредит наличными</option>
+            <option value="other">Другое, нужна консультация</option>
+            <option value="partner">Сотрудничество, размещение предложения</option>
+          </select>
+          <p class="field__error" id="lead-topic-error" hidden></p>
+        </div>
+
+        <div class="field">
+          <label class="field__label" for="lead-comment">Комментарий <span class="field__optional">(необязательно)</span></label>
+          <textarea class="field__input field__input--area" id="lead-comment" name="comment" rows="4"></textarea>
+        </div>
+
+        <div class="field field--check">
+          <input class="field__check" type="checkbox" id="lead-consent" name="consent"
+                 required aria-describedby="lead-consent-error">
+          <label class="field__checklabel" for="lead-consent">
+            Я даю согласие на обработку имени и контакта, чтобы получить ответ на заявку
+          </label>
+          <p class="field__error" id="lead-consent-error" hidden></p>
+        </div>
+
+        <button class="btn btn--dark btn--wide" type="submit" aria-describedby="lead-submit-hint">
+          Отправить заявку
+          <svg class="btn__arrow" viewBox="0 0 16 16" aria-hidden="true" focusable="false"><path d="M2 8h11M9 4l4 4-4 4" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/></svg>
+        </button>
+        <p class="field__hint" id="lead-submit-hint">Откроет чат в телеграме в новой вкладке с готовым сообщением.</p>
+
+        <!-- tabindex без role="status": внутри блока есть ссылка, до которой
+             надо добраться, — сюда уводится фокус, и живой регион дал бы
+             второй канал речи поверх первого -->
+        <p class="form__success" id="form-success" tabindex="-1" hidden></p>
+      </form>
+    </div>
+  </section>
+
+</main>
+
+<footer class="site-footer">
+  <div class="shell">
+    <div class="site-footer__top">
+      <a class="brand brand--footer" href="#main">
+        <span class="brand__mark" aria-hidden="true">С</span>
+        <span class="brand__word">СВОДКА</span>
+      </a>
+
+      <nav class="site-footer__nav" aria-label="Разделы сайта, подвал">
+        <a href="#offers">Каталог</a>
+        <a href="#how">Как это работает</a>
+        <a href="#faq">Вопросы</a>
+        <a href="#lead">Заявка</a>
+      </nav>
+    </div>
+
+    <p class="site-footer__disclaimer">
+      Сайт носит информационный характер и не является публичной офертой.
+      Мы не выдаём займы и не выпускаем карты: все продукты оформляются
+      на сайтах банков и микрофинансовых организаций, они же принимают решение
+      и определяют условия. Точные ставки, полная стоимость кредита, сроки
+      и требования к заёмщику указаны на сайте партнёра в момент оформления.
+      Кредиты и займы выдаются гражданам Российской Федерации от 18 лет.
+    </p>
+
+    <p class="site-footer__legal">
+      <span>© <span class="brand__word">СВОДКА</span>, 2026</span>
+    </p>
+  </div>
+</footer>
+
+<!-- Каталог с сервера идёт мимо кеша (data.php), чтобы правки из панели были
+     видны сразу. Нет PHP — работает обычный файл. -->
+<script src="data.php"></script>
+<script>if(typeof OFFERS==="undefined"){document.write('<script src="data.js?v=1"><\/script>');}</script>
+<script src="script.js?v=1"></script>
+</body>
+</html>
