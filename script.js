@@ -10,7 +10,6 @@
      может выключить её при открытой странице, и тогда CSS-анимация поедет,
      а кнопка паузы осталась бы скрытой навсегда. */
   var motionQuery = window.matchMedia('(prefers-reduced-motion: reduce)');
-  var reduceMotion = motionQuery.matches;
 
   /* ── данные ───────────────────────────────────────────────────────── */
   /* Каталог объявлен глобальными const, а const мимо window не переприсвоить —
@@ -63,6 +62,21 @@
     return /^https?:\/\/\S+$/i.test(String(url || '').trim());
   }
 
+  /* Пастельная подложка под логотип: фирменный цвет банка, разбавленный
+     белым. Считаем сами, а не через color-mix, чтобы цвет из панели работал
+     в любом браузере и не зависел от поддержки функции. */
+  function tint(hex, amount) {
+    var h = String(hex || '').replace('#', '');
+    if (h.length === 3) h = h[0] + h[0] + h[1] + h[1] + h[2] + h[2];
+    if (!/^[0-9a-f]{6}$/i.test(h)) return '';
+    var k = amount == null ? 0.12 : amount;
+    var out = [0, 2, 4].map(function (i) {
+      var c = parseInt(h.slice(i, i + 2), 16);
+      return Math.round(c * k + 255 * (1 - k));
+    });
+    return 'rgb(' + out.join(',') + ')';
+  }
+
   // Дев-страховка: одинаковые пары «банк + продукт» дают одинаковые заголовки
   // карточек, и список заголовков перестаёт быть навигацией
   (function warnDuplicates() {
@@ -84,114 +98,87 @@
   var taglineEl = document.getElementById('tagline');
   if (taglineEl && site.tagline) taglineEl.textContent = site.tagline;
 
-  /* ── сводка на первом экране ──────────────────────────────────────── */
-  (function renderSummary() {
-    var rows = document.getElementById('summary-rows');
-    if (!rows) return;
-
-    var max = 1;
-    cats.forEach(function (c) { max = Math.max(max, countIn(c.id)); });
-
-    cats.forEach(function (c) {
-      var n = countIn(c.id);
-
-      var li = document.createElement('li');
-      li.className = 'summary__row';
-
-      // Вся строка — ссылка на каталог с уже выбранным разделом: то, что
-      // человек видит в сводке, он может сразу открыть
-      var a = document.createElement('a');
-      a.className = 'summary__link';
-      a.href = '#offers';
-      a.dataset.cat = c.id;
-
-      var name = document.createElement('span');
-      name.className = 'summary__name';
-      name.textContent = c.label;
-
-      // Полоса — картинка того же числа, что стоит рядом цифрой.
-      // Скринридер прочитает «Займы, 15 предложений» и без неё.
-      var bar = document.createElement('span');
-      bar.className = 'summary__bar';
-      bar.setAttribute('aria-hidden', 'true');
-      var fill = document.createElement('span');
-      fill.style.width = Math.round(n / max * 100) + '%';
-      bar.appendChild(fill);
-
-      var num = document.createElement('span');
-      num.className = 'summary__num';
-      // Пробел внутри значения: без него имя ссылки склеивается в «Займы15»
-      num.textContent = ' ' + n;
-
-      var tail = document.createElement('span');
-      tail.className = 'visually-hidden';
-      tail.textContent = ' ' + plural(n, 'предложение', 'предложения', 'предложений') +
-        ', открыть раздел каталога';
-
-      a.appendChild(name);
-      a.appendChild(bar);
-      a.appendChild(num);
-      a.appendChild(tail);
-      li.appendChild(a);
-      rows.appendChild(li);
-    });
-
-    // Строка сводки не просто прыгает к каталогу, а включает нужный фильтр —
-    // иначе раздел пришлось бы искать глазами второй раз
-    rows.addEventListener('click', function (e) {
-      var link = e.target.closest ? e.target.closest('.summary__link') : null;
-      if (!link) return;
-      if (e.metaKey || e.ctrlKey || e.shiftKey || e.altKey || e.button !== 0) return;
-      var btn = document.querySelector('.filter[data-cat="' + link.dataset.cat + '"]');
-      if (btn) btn.click();
-    });
-
-    var foot = document.getElementById('summary-stats');
-    if (!foot) return;
+  /* ── цифры на первом экране ───────────────────────────────────────── */
+  (function renderHeroStats() {
+    var box = document.getElementById('hero-stats');
+    if (!box) return;
 
     var partners = offers.map(function (o) { return o.partner; })
       .filter(function (v, i, a) { return a.indexOf(v) === i; }).length;
 
     [
       { value: offers.length,
-        label: plural(offers.length, 'предложение', 'предложения', 'предложений') },
+        label: plural(offers.length, 'предложение в каталоге', 'предложения в каталоге', 'предложений в каталоге') },
       { value: partners,
         label: plural(partners, 'банк и МФО', 'банка и МФО', 'банков и МФО') },
       { value: '0 ₽', label: 'стоимость для вас' }
     ].forEach(function (s) {
       var li = document.createElement('li');
       var v = document.createElement('span');
-      v.className = 'summary__stat-value';
+      v.className = 'hero__stat-value';
       v.textContent = s.value;
       var l = document.createElement('span');
-      l.className = 'summary__stat-label';
+      l.className = 'hero__stat-label';
       l.textContent = s.label;
       li.appendChild(v);
       li.appendChild(l);
-      foot.appendChild(li);
+      box.appendChild(li);
     });
   })();
 
-  /* ── бегущая строка партнёров ─────────────────────────────────────── */
-  (function renderTicker() {
+  /* ── лента логотипов ──────────────────────────────────────────────── */
+  (function renderMarquee() {
     var track = document.getElementById('ticker');
     if (!track) return;
 
-    var names = offers.map(function (o) { return o.partner; })
-      .filter(function (v, i, a) { return a.indexOf(v) === i; });
+    // По одному логотипу на банк. Берём первый оффер банка, У КОТОРОГО ЕСТЬ
+    // логотип: иначе банк уехал бы в текстовый запасной вариант только из-за
+    // порядка карточек в каталоге.
+    var byName = {}, brands = [];
+    offers.forEach(function (o) {
+      if (!byName[o.partner]) {
+        byName[o.partner] = { name: o.partner, logo: o.logo || '' };
+        brands.push(byName[o.partner]);
+      } else if (!byName[o.partner].logo && o.logo) {
+        byName[o.partner].logo = o.logo;
+      }
+    });
 
-    function item(name, copy) {
+    function item(b, copy) {
       var li = document.createElement('li');
-      li.className = 'ticker__item' + (copy ? ' ticker__item--copy' : '');
+      li.className = 'marquee__item' + (copy ? ' marquee__item--copy' : '');
       // Копию помечаем поэлементно, а не обёрткой: обёртка с display:contents
       // может выпасть из дерева доступности вместе со своим aria-hidden
       if (copy) li.setAttribute('aria-hidden', 'true');
-      li.textContent = name;
+
+      if (b.logo) {
+        var plate = document.createElement('span');
+        plate.className = 'marquee__plate';
+        var img = document.createElement('img');
+        img.src = b.logo;
+        // Здесь имя банка живёт в alt, а не скрытой строкой рядом: при
+        // отключённых картинках браузер нарисует alt текстом, и лента
+        // останется осмысленной. В карточках наоборот — там имя уже стоит
+        // текстом рядом, и alt его дублировал бы.
+        img.alt = copy ? '' : b.name;
+        // loading="lazy" здесь запрещён: лента лежит в overflow:hidden и
+        // выезжает трансформом, ленивую загрузку это не переоценивает —
+        // вторая половина может не загрузиться никогда, и в петле будут дыры
+        img.decoding = 'async';
+        if (copy) img.setAttribute('fetchpriority', 'low');
+        plate.appendChild(img);
+        li.appendChild(plate);
+      } else {
+        // Плашку с инициалами не ставим: рядом нет текста, и «СБ» зрячему
+        // ничего не скажет — пишем название целиком
+        li.appendChild(document.createTextNode(b.name));
+      }
+
       return li;
     }
 
-    names.forEach(function (n) { track.appendChild(item(n, false)); });
-    names.forEach(function (n) { track.appendChild(item(n, true)); });
+    brands.forEach(function (b) { track.appendChild(item(b, false)); });
+    brands.forEach(function (b) { track.appendChild(item(b, true)); });
 
     // SC 2.2.2: у бесконечной анимации обязан быть видимый выключатель.
     // Наведение мышью не считается — оно недоступно с клавиатуры и с тача.
@@ -208,67 +195,50 @@
     });
 
     function syncToggle() {
-      reduceMotion = motionQuery.matches;
       // Под «меньше движения» лента не едет и не превращается в скроллер:
-      // строки просто переносятся. Кнопке тогда нечего выключать.
-      toggle.hidden = reduceMotion;
+      // логотипы просто переносятся. Кнопке тогда нечего выключать.
+      toggle.hidden = motionQuery.matches;
     }
     syncToggle();
     if (motionQuery.addEventListener) motionQuery.addEventListener('change', syncToggle);
     else if (motionQuery.addListener) motionQuery.addListener(syncToggle);
   })();
 
-  /* ── каталог ──────────────────────────────────────────────────────── */
-  var grid = document.getElementById('offers-grid');
-  var countEl = document.getElementById('offers-count');
-  var statusEl = document.getElementById('offers-status');
-  var emptyEl = document.getElementById('offers-empty');
-  var filtersRow = document.getElementById('filters');
-  var pendingNote = document.getElementById('offers-pending');
-  var currentCat = 'all';
-  var lastSpoken = '';
-
-  function buildOffer(offer, index, instant) {
+  /* ── карточка ─────────────────────────────────────────────────────── */
+  function buildOffer(offer, opts) {
+    opts = opts || {};
     var li = document.createElement('li');
-    li.className = 'offer reveal' + (instant ? ' is-visible' : '');
+    li.className = 'offer' + (opts.decorative ? '' : ' reveal') +
+      (opts.instant ? ' is-visible' : '');
 
     var tone = offer.tone || {};
 
-    // Цветная полоска сверху — чистая декорация в фирменном цвете банка.
-    // Текста на ней нет, испортить контраст ею невозможно.
-    var stripe = document.createElement('span');
-    stripe.className = 'offer__stripe';
-    stripe.setAttribute('aria-hidden', 'true');
-    if (tone.bg) stripe.style.background = tone.bg;
-    li.appendChild(stripe);
-
     /* --- шапка карточки --- */
-    var head = document.createElement('div');
-    head.className = 'offer__head';
+    var top = document.createElement('div');
+    top.className = 'offer__top';
 
     // Логотип — опознавательный знак для глаза. Название банка стоит текстом
     // рядом, поэтому alt пустой: иначе на сорока карточках скринридер прочитал
     // бы «Сбербанк Сбербанк».
+    var logoBox = document.createElement('span');
+    logoBox.className = 'offer__logo';
+    if (tone.bg) logoBox.style.background = tint(tone.bg, 0.12);
+
     if (offer.logo) {
-      var box = document.createElement('span');
-      box.className = 'offer__logo';
       var img = document.createElement('img');
       img.src = offer.logo;
       img.alt = '';
       img.width = 44;
       img.height = 32;
-      img.loading = 'lazy';
-      box.appendChild(img);
-      head.appendChild(box);
+      if (!opts.decorative) img.loading = 'lazy';
+      logoBox.appendChild(img);
     } else {
-      var plate = document.createElement('span');
-      plate.className = 'offer__logo offer__logo--text';
-      plate.setAttribute('aria-hidden', 'true');
-      plate.textContent = initials(offer.partner);
-      if (tone.bg) plate.style.background = tone.bg;
-      if (tone.ink) plate.style.color = tone.ink;
-      head.appendChild(plate);
+      logoBox.className += ' offer__logo--text';
+      logoBox.setAttribute('aria-hidden', 'true');
+      logoBox.textContent = initials(offer.partner);
+      if (tone.bg) logoBox.style.color = tone.bg;
     }
+    top.appendChild(logoBox);
 
     var names = document.createElement('span');
     names.className = 'offer__names';
@@ -284,22 +254,19 @@
       tag.textContent = offer.tag;
       names.appendChild(tag);
     }
-    head.appendChild(names);
-
-    var num = document.createElement('span');
-    num.className = 'offer__num';
-    num.setAttribute('aria-hidden', 'true');   // номер строки, а не содержание
-    num.textContent = (index + 1 < 10 ? '0' : '') + (index + 1);
-    head.appendChild(num);
-
-    li.appendChild(head);
+    top.appendChild(names);
+    li.appendChild(top);
 
     /* --- название --- */
-    var title = document.createElement('h3');
+    // В витрине первого экрана это не заголовок, а картинка заголовка:
+    // настоящий h3 создал бы три лишних пункта в оглавлении страницы между
+    // h1 и h2, и полагаться на один aria-hidden тут нельзя
+    var title = document.createElement(opts.decorative ? 'p' : 'h3');
     title.className = 'offer__title';
     title.appendChild(document.createTextNode(offer.title));
-    // Банк добавлен в сам заголовок скрытой частью: «Займ на карту» повторяется
-    // у полутора десятков МФО, и список заголовков без банка бесполезен
+    // Банк добавлен в сам заголовок скрытой частью: «Займ на карту»
+    // повторяется у полутора десятков МФО, и список заголовков без банка
+    // бесполезен
     var titleTail = document.createElement('span');
     titleTail.className = 'visually-hidden';
     titleTail.textContent = ', ' + offer.partner;
@@ -345,7 +312,12 @@
     // Токен берём прямо из партнёрской ссылки, чтобы он не разъезжался с ней.
     // Не раскодируем: erid — всегда буквы и цифры, а decodeURIComponent на
     // битой строке бросает исключение и обрушил бы отрисовку всей сетки.
-    var erid = ((offer.url || '').match(/[?&]erid=([^&#]+)/) || [])[1];
+    // В витрине маркировку не печатаем: она уже стоит в настоящей карточке
+    // ниже, а тут её могло бы визуально срезать соседней карточкой стопки —
+    // обрезанная обязательная строка хуже её отсутствия
+    var erid = opts.decorative
+      ? null
+      : ((offer.url || '').match(/[?&]erid=([^&#]+)/) || [])[1];
     if (erid && !/^[A-Za-z0-9]+$/.test(erid)) {
       console.warn('Пропущен erid неожиданного вида у оффера:', offer.partner, erid);
       erid = null;
@@ -361,20 +333,33 @@
     var cta = document.createElement('p');
     cta.className = 'offer__cta';
 
+    var cat = catById(offer.cat);
+    var hasLink = realLink(offer.url);
+    var label = hasLink ? ((cat && cat.cta) || 'Оформить') : 'Оставить заявку';
+
+    if (opts.decorative) {
+      // Витрина в герое целиком скрыта от скринридера и не должна ловить
+      // ни фокус, ни клик: кнопка здесь — нарисованная, а не ссылка
+      var fake = document.createElement('span');
+      fake.className = 'offer__link' + (hasLink ? '' : ' offer__link--soft');
+      fake.textContent = label;
+      cta.appendChild(fake);
+      li.appendChild(cta);
+      return li;
+    }
+
     var link = document.createElement('a');
     var sr = document.createElement('span');
     sr.className = 'visually-hidden';
 
-    if (realLink(offer.url)) {
+    if (hasLink) {
       link.className = 'offer__link';
       link.href = offer.url;
       link.target = '_blank';
       // noreferrer намеренно нет: партнёрки часто считают переход по Referer,
       // и он молча обнулил бы комиссию
       link.rel = 'noopener nofollow sponsored';
-
-      var c = catById(offer.cat);
-      link.appendChild(document.createTextNode((c && c.cta) || 'Оформить'));
+      link.appendChild(document.createTextNode(label));
       // Видимый текст называет действие, скрытый хвост — продукт, банк и
       // предупреждение о новой вкладке: иначе на странице сорок ссылок с
       // одинаковым именем «Оформить карту». Хвост начинается с запятой:
@@ -386,7 +371,7 @@
       // мёртвая кнопка, которая обещает переход к банку, хуже честной.
       link.className = 'offer__link offer__link--soft';
       link.href = '#lead';
-      link.appendChild(document.createTextNode('Оставить заявку'));
+      link.appendChild(document.createTextNode(label));
       sr.textContent = ', ' + offer.title + ', ' + offer.partner +
         '. Форма ниже на странице';
     }
@@ -394,7 +379,7 @@
     link.appendChild(sr);
     link.insertAdjacentHTML('beforeend',
       '<svg class="btn__arrow" viewBox="0 0 16 16" aria-hidden="true" focusable="false">' +
-      '<path d="M2 8h11M9 4l4 4-4 4" fill="none" stroke="currentColor" stroke-width="1.6" ' +
+      '<path d="M2 8h11M9 4l4 4-4 4" fill="none" stroke="currentColor" stroke-width="1.7" ' +
       'stroke-linecap="round" stroke-linejoin="round"/></svg>');
 
     cta.appendChild(link);
@@ -403,52 +388,131 @@
     return li;
   }
 
-  function render(cat, announce) {
+  /* ── витрина в герое ──────────────────────────────────────────────── */
+  (function renderStack() {
+    var stack = document.getElementById('hero-stack');
+    if (!stack) return;
+
+    // по одной карточке из разных разделов — чтобы витрина показывала,
+    // что каталог не про один продукт
+    var picked = [];
+    cats.forEach(function (c) {
+      if (picked.length >= 3) return;
+      var first = offers.filter(function (o) { return o.cat === c.id; })[0];
+      if (first) picked.push(first);
+    });
+    while (picked.length < 3 && offers[picked.length]) picked.push(offers[picked.length]);
+
+    picked.forEach(function (o) {
+      stack.appendChild(buildOffer(o, { decorative: true, instant: true }));
+    });
+  })();
+
+  /* ── каталог ──────────────────────────────────────────────────────── */
+  var grid = document.getElementById('offers-grid');
+  var countEl = document.getElementById('offers-count');
+  var statusEl = document.getElementById('offers-status');
+  var emptyEl = document.getElementById('offers-empty');
+  var filtersRow = document.getElementById('filters');
+  var pendingNote = document.getElementById('offers-pending');
+  var searchEl = document.getElementById('offers-search');
+  var clearEl = document.getElementById('search-clear');
+
+  var currentCat = 'all';
+  var query = '';
+  var lastSpoken = '';
+  var MIN_QUERY = 2;   // по одной букве объявлять счёт бессмысленно
+
+  // «ё» приводим к «е» с обеих сторон: иначе «Заём» не находится по «заем»
+  function norm(s) {
+    return String(s || '').toLowerCase().replace(/ё/g, 'е');
+  }
+
+  function matches(offer) {
+    if (!query) return true;
+    var hay = norm(offer.partner + ' ' + offer.title + ' ' + (offer.tag || ''));
+    // каждое слово запроса должно найтись: «альфа карта» находит «Альфа-Карта»
+    return query.split(/\s+/).every(function (w) { return hay.indexOf(w) !== -1; });
+  }
+
+  function visible() {
+    return offers.filter(function (o) {
+      return (currentCat === 'all' || o.cat === currentCat) && matches(o);
+    });
+  }
+
+  function countText(list) {
+    var label = catById(currentCat);
+    var where = currentCat === 'all' ? '' : ' в разделе «' + (label ? label.label : currentCat) + '»';
+    var forQuery = query ? ' по запросу «' + query + '»' : '';
+
+    if (!list.length) {
+      return 'Ничего не нашлось' + forQuery + where;
+    }
+    return list.length + ' ' +
+      plural(list.length, 'предложение', 'предложения', 'предложений') +
+      forQuery + (where || (query ? '' : ' во всех разделах'));
+  }
+
+  /* opts: instant — показать карточки без анимации появления,
+            announce — записать итог в живой регион,
+            source — кто позвал: 'filter' | 'search' | 'init'.
+     Это три разных решения, и склеивать их в один флаг нельзя: поиску нужна
+     мгновенная отрисовка на каждую букву, но объявление — только раз в конце. */
+  function render(opts) {
     if (!grid) return;
-    var list = cat === 'all'
-      ? offers
-      : offers.filter(function (o) { return o.cat === cat; });
+    opts = opts || {};
+    var list = visible();
 
     // Если фокус стоял внутри перерисовываемой сетки, его надо вернуть руками:
     // иначе он уедет на <body> и следующий Tab начнётся с начала документа
     var hadFocus = grid.contains(document.activeElement);
 
     var frag = document.createDocumentFragment();
-    // Карточки, отрисованные в ответ на нажатие фильтра, показываем сразу:
-    // навигация в режиме обзора двигает курсор без события фокуса, и человек
-    // услышал бы текст, которого ещё нет на экране
-    list.forEach(function (offer, i) { frag.appendChild(buildOffer(offer, i, !!announce)); });
+    list.forEach(function (offer) {
+      frag.appendChild(buildOffer(offer, { instant: !!opts.instant }));
+    });
     grid.replaceChildren(frag);
 
     if (emptyEl) {
-      emptyEl.textContent = 'В этом разделе пока нет предложений. ' +
-        'Загляните в другие или оставьте заявку на подбор.';
+      emptyEl.textContent = query
+        ? 'По запросу ничего не нашлось. Проверьте написание или очистите поиск — в каталоге есть и другие разделы.'
+        : 'В этом разделе пока нет предложений. Загляните в другие или оставьте заявку на подбор.';
       emptyEl.hidden = list.length > 0;
     }
 
-    var label = catById(cat);
-    var text = list.length
-      ? list.length + ' ' +
-        plural(list.length, 'предложение', 'предложения', 'предложений') +
-        (cat === 'all' ? ' во всех разделах' : ' в разделе «' + (label ? label.label : cat) + '»')
-      : 'Ничего не найдено в разделе «' + (label ? label.label : cat) + '»';
-
+    var text = countText(list);
     if (countEl) countEl.textContent = text;
 
-    // Озвучиваем только по действию пользователя и только если строка
-    // изменилась: иначе повторное нажатие активного фильтра объявит счётчик
-    // заново. Название раздела в строке обязательно — без него два раздела
-    // с одинаковым числом дали бы одинаковый текст, и регион промолчал бы.
-    if (announce && statusEl && text !== lastSpoken) {
-      lastSpoken = text;
-      statusEl.textContent = text;
+    // Озвучиваем только по действию человека и только если строка изменилась:
+    // иначе повторное нажатие активного фильтра объявит счётчик заново.
+    // Название раздела и запрос в строке обязательны — без них два разных
+    // отбора с одинаковым числом дали бы одинаковый текст, и регион промолчал.
+    if (statusEl) {
+      if (opts.announce) {
+        if (text !== lastSpoken) {
+          lastSpoken = text;
+          statusEl.textContent = text;
+        }
+      } else if (opts.source === 'init') {
+        // Первую, немую отрисовку запоминаем: иначе нажатие на уже выбранный
+        // фильтр объявило бы ровно то, что и так на экране. Промежуточные
+        // немые отрисовки поиска строку НЕ запоминают — иначе отложенное
+        // объявление потом решило бы, что говорить нечего.
+        lastSpoken = text;
+      }
     }
 
-    if (!announce) observeReveals(grid);
+    if (!opts.instant) observeReveals(grid);
 
-    if (hadFocus) {
-      var back = document.querySelector('.filter[aria-pressed="true"]') || countEl;
-      if (back && back.focus) back.focus();
+    // Фокус возвращаем только после кнопки фильтра. После поиска этого делать
+    // нельзя: отложенный таймер мог бы выдернуть фокус из карточки, куда
+    // человек уже ушёл табуляцией. preventScroll — иначе страница прыгает
+    // на высоту липкой панели при каждом нажатии.
+    if (hadFocus && opts.source === 'filter') {
+      var back = document.querySelector('.filter[aria-pressed="true"]') ||
+                 document.getElementById('offers');
+      if (back && back.focus) back.focus({ preventScroll: true });
     }
   }
 
@@ -483,7 +547,7 @@
       btn.addEventListener('click', function () {
         currentCat = cat.id;
         syncFilters();
-        render(currentCat, true);
+        render({ instant: true, announce: true, source: 'filter' });
       });
 
       filtersRow.appendChild(btn);
@@ -492,7 +556,85 @@
     syncFilters();
   })();
 
-  if (grid) render('all', false);
+  /* ── поиск ────────────────────────────────────────────────────────── */
+  (function initSearch() {
+    if (!searchEl) return;
+
+    var timer = null;
+
+    /* Два решения с разными сроками. Сетку перерисовываем на каждую букву —
+       глазам нужен мгновенный отклик. Живой регион трогаем только через 800 мс
+       тишины: NVDA и JAWS копят очередь polite, и шесть букв дали бы шесть
+       фраз подряд с отставанием речи на секунды. 800 мс — верхняя граница
+       обычной паузы внутри слова при небыстром наборе. */
+    function paint() {
+      query = norm(searchEl.value).trim();
+      if (clearEl) clearEl.hidden = !searchEl.value;
+      render({ instant: true, source: 'search' });
+    }
+
+    function speak() {
+      // Одну букву не объявляем: счёт по ней всё равно ничего не значит
+      if (query && query.length < MIN_QUERY) return;
+      render({ instant: true, announce: true, source: 'search' });
+    }
+
+    searchEl.addEventListener('input', function (e) {
+      // Предиктивный ввод: пока слово ещё набирается системой, промежуточные
+      // события игнорируем, итог придёт в compositionend
+      if (e.isComposing) return;
+      paint();
+      clearTimeout(timer);
+      timer = setTimeout(speak, 800);
+    });
+
+    searchEl.addEventListener('compositionend', function () {
+      paint();
+      clearTimeout(timer);
+      timer = setTimeout(speak, 800);
+    });
+
+    // В WebKit Escape и родной крестик чистят поле мимо события input:
+    // без этого поле выглядело бы пустым при отфильтрованном старым
+    // запросом списке
+    searchEl.addEventListener('search', function () {
+      clearTimeout(timer);
+      paint();
+      speak();
+    });
+
+    searchEl.addEventListener('keydown', function (e) {
+      // Формы вокруг поля нет, отправлять некуда — Enter просто досрочно
+      // объявляет результат
+      if (e.key === 'Enter') {
+        e.preventDefault();
+        clearTimeout(timer);
+        paint();
+        render({ instant: true, announce: true, source: 'search' });
+      }
+      if (e.key === 'Escape' && searchEl.value) {
+        e.preventDefault();
+        searchEl.value = '';
+        clearTimeout(timer);
+        paint();
+        render({ instant: true, announce: true, source: 'search' });
+      }
+    });
+
+    if (clearEl) {
+      clearEl.addEventListener('click', function () {
+        searchEl.value = '';
+        clearTimeout(timer);
+        // Фокус переводим в поле ДО того, как кнопка спрячется: иначе фокус
+        // останется на исчезнувшем элементе и уедет на <body>
+        searchEl.focus();
+        paint();
+        render({ instant: true, announce: true, source: 'search' });
+      });
+    }
+  })();
+
+  if (grid) render({ source: 'init' });
 
   // Пока партнёрские ссылки не вставлены, честно говорим об этом один раз над
   // каталогом, а не сорока подписями в карточках
@@ -617,7 +759,7 @@
     // Человек пришёл сюда кнопкой карточки — подставим раздел заранее
     document.addEventListener('click', function (e) {
       var link = e.target.closest ? e.target.closest('.offer__link--soft') : null;
-      if (!link) return;
+      if (!link || link.tagName !== 'A') return;
       var card = link.closest('.offer');
       var tag = card && card.querySelector('.offer__tag');
       if (!tag) return;
@@ -762,5 +904,56 @@
       el = el.parentElement && el.parentElement.closest('.reveal:not(.is-visible)');
     }
   });
+
+  /* ── высота липкого хрома ─────────────────────────────────────────── */
+  /* Шапка и панель фильтров рисуются поверх страницы, но её видимую высоту
+     не уменьшают: браузер при табуляции об этом не знает и подводит элемент
+     ровно под них (2.4.11). Резерв задаётся только через scroll-padding-top,
+     а высоту надо мерить — кнопки фильтров приходят из data.js, и строка
+     переносится по-разному. */
+  (function stickyChrome() {
+    var header = document.querySelector('.site-header');
+    var toolbar = document.getElementById('toolbar');
+    if (!header) return;
+
+    var stick = header.offsetHeight;
+
+    function measure() {
+      var h = header.offsetHeight;
+      // Панель липнет не всегда: на низком экране медиазапрос её отпускает
+      if (toolbar && getComputedStyle(toolbar).position === 'sticky') {
+        h += toolbar.offsetHeight + 8;
+      }
+      stick = h;
+      document.documentElement.style.setProperty('--stick-h', h + 'px');
+    }
+    measure();
+
+    if ('ResizeObserver' in window) {
+      var ro = new ResizeObserver(measure);
+      ro.observe(header);
+      if (toolbar) ro.observe(toolbar);
+    }
+    // resize ловит зум и поворот экрана, которых ResizeObserver может не дать
+    window.addEventListener('resize', measure);
+
+    // scroll-padding работает, только когда браузер сам прокручивает. При
+    // программном focus() и при схлопывании списка прокрутки нет — элемент
+    // остаётся под панелью. Этот обработчик стоит ПОСЛЕ того, что снимает
+    // .reveal: до него getBoundingClientRect врёт на высоту сдвига.
+    document.addEventListener('focusin', function (e) {
+      var el = e.target;
+      if (!el || !el.getBoundingClientRect || !el.closest) return;
+      // Сам липкий хром догонять не надо — он и так всегда наверху
+      if (el.closest('.site-header, .toolbar, .skip-link')) return;
+
+      var top = el.getBoundingClientRect().top;
+      var limit = stick + 12;
+      if (top >= limit) return;
+      // behavior:'auto' намеренно: плавная прокрутка html дерётся с этой
+      // и оставляет элемент на полпути
+      window.scrollBy({ top: top - limit, left: 0, behavior: 'auto' });
+    });
+  })();
 
 })();

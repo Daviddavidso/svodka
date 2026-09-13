@@ -4,7 +4,7 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>Займы, дебетовые и кредитные карты, кредиты наличными — СВОДКА</title>
-<meta name="description" content="Сводка предложений банков и МФО: займы на карту, дебетовые и кредитные карты, кредиты наличными. Оформление онлайн на сайте партнёра.">
+<meta name="description" content="Сводка предложений банков и МФО: займы на карту, дебетовые и кредитные карты, кредиты наличными. Поиск по каталогу, оформление онлайн на сайте партнёра.">
 
 <!-- Страница закрыта от поисковиков намеренно. Две причины: партнёрские
      ссылки ещё не подключены, и в маркировке рекламы пока нет ни erid, ни
@@ -13,7 +13,7 @@
 <meta name="robots" content="noindex, nofollow">
 
 <link rel="icon" href="favicon.svg" type="image/svg+xml">
-<meta name="theme-color" content="#F0EFEA">
+<meta name="theme-color" content="#F5F4F0">
 <!-- Тема только светлая: без этого при системной тёмной теме браузер
      перекрашивает свои же элементы формы — списки, чекбоксы, автозаполнение,
      и весь просчитанный контраст полей перестаёт действовать -->
@@ -28,8 +28,8 @@
 <!-- Кириллические сабсеты — они нужны первому экрану -->
 <link rel="preload" href="fonts/golos-600-cyrillic.woff2" as="font" type="font/woff2" crossorigin>
 <link rel="preload" href="fonts/golos-400-cyrillic.woff2" as="font" type="font/woff2" crossorigin>
-<link rel="stylesheet" href="fonts/fonts.css?v=1">
-<link rel="stylesheet" href="styles.css?v=1">
+<link rel="stylesheet" href="fonts/fonts.css?v=2">
+<link rel="stylesheet" href="styles.css?v=2">
 
 <!-- Класс ставится здесь, а не в script.js: скрывать блоки до появления можно
      только когда скрипт точно работает, и решать это надо ДО первой отрисовки,
@@ -39,11 +39,6 @@
 <body>
 
 <a class="skip-link" href="#main">Перейти к основному содержимому</a>
-
-<!-- Вертикальная модульная сетка — чистая декорация -->
-<div class="grid-lines" aria-hidden="true">
-  <span></span><span></span><span></span><span></span>
-</div>
 
 <header class="site-header">
   <div class="shell site-header__inner">
@@ -63,7 +58,7 @@
 
     <a class="btn btn--dark btn--sm site-header__cta" href="#offers">
       Смотреть каталог
-      <svg class="btn__arrow" viewBox="0 0 16 16" aria-hidden="true" focusable="false"><path d="M2 8h11M9 4l4 4-4 4" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/></svg>
+      <svg class="btn__arrow" viewBox="0 0 16 16" aria-hidden="true" focusable="false"><path d="M2 8h11M9 4l4 4-4 4" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"/></svg>
     </a>
   </div>
 </header>
@@ -71,82 +66,67 @@
 <main id="main" tabindex="-1">
 
   <!-- ═══════════════════════ ПЕРВЫЙ ЭКРАН ═══════════════════════ -->
-  <!-- div, а не section: именованных областей на странице должно быть
-       немного, иначе навигация по ориентирам превращается в кашу -->
   <div class="hero">
-    <div class="shell">
+    <div class="shell hero__grid">
 
-      <!-- Служебная строка — часть оформления. Для скринридера она скрыта:
-           иначе перед каждым заголовком звучало бы «ноль один слэш сводка» -->
-      <p class="meta-row" aria-hidden="true">
-        <span class="meta">01 / Сводка</span>
-        <span class="meta meta--center">Предложения банков и МФО</span>
-        <span class="meta">2026</span>
-      </p>
+      <div class="hero__text">
+        <p class="eyebrow">
+          <span class="eyebrow__dot" aria-hidden="true"></span>
+          <span id="tagline">Финансовые предложения банков и МФО — одним списком</span>
+        </p>
 
-      <div class="hero__grid">
-        <div class="hero__text">
-          <p class="pill">
-            <span class="pill__dot" aria-hidden="true"></span>
-            <span id="tagline">Финансовые предложения банков и МФО — одним списком</span>
-          </p>
+        <!-- Строки разбиты явно: при автопереносе смена размера шрифта роняла
+             «в одной сводке» на строку выше, и заголовок становился шире колонки -->
+        <h1 class="hero__title">
+          <span class="hero__line">Карты, займы</span>
+          <span class="hero__line">и кредиты —</span>
+          <span class="hero__line hero__line--accent">в одной сводке</span>
+        </h1>
 
-          <!-- Строки разбиты явно: при автопереносе смена размера шрифта
-               роняла «в одной сводке» на строку выше, и заголовок становился
-               заметно шире колонки -->
-          <h1 class="hero__title">
-            <span class="hero__line">Деньги,</span>
-            <span class="hero__line">карты и займы —</span>
-            <span class="hero__line hero__line--accent">в одной сводке</span>
-          </h1>
+        <p class="hero__lead">
+          Займы на карту, дебетовые и кредитные карты, кредиты наличными.
+          Всё собрано в один список с поиском, чтобы не открывать сорок сайтов подряд.
+        </p>
 
-          <p class="hero__lead">
-            Займы на карту, дебетовые и кредитные карты, кредиты наличными.
-            Всё собрано в один список, чтобы не открывать сорок сайтов подряд.
-          </p>
-
-          <div class="hero__actions">
-            <a class="btn btn--dark" href="#offers">
-              Смотреть каталог
-              <svg class="btn__arrow" viewBox="0 0 16 16" aria-hidden="true" focusable="false"><path d="M2 8h11M9 4l4 4-4 4" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/></svg>
-            </a>
-            <a class="btn btn--ghost" href="#how">Как это работает</a>
-          </div>
+        <div class="hero__actions">
+          <a class="btn btn--dark btn--lg" href="#offers">
+            Смотреть каталог
+            <svg class="btn__arrow" viewBox="0 0 16 16" aria-hidden="true" focusable="false"><path d="M2 8h11M9 4l4 4-4 4" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"/></svg>
+          </a>
+          <a class="btn btn--ghost btn--lg" href="#how">Как это работает</a>
         </div>
 
-        <!-- Сводка по разделам: те же числа, что на кнопках фильтра.
-             Строки — ссылки: нажатие открывает нужный раздел каталога -->
-        <div class="summary">
-          <h2 class="summary__title" id="summary-title">Что сейчас в каталоге</h2>
-          <ul class="summary__rows" id="summary-rows" role="list" aria-labelledby="summary-title"><!-- из data.js --></ul>
-          <ul class="summary__stats" id="summary-stats" role="list"><!-- из data.js --></ul>
-        </div>
+        <ul class="hero__stats" id="hero-stats" role="list"><!-- из data.js --></ul>
       </div>
+
+      <!-- Витрина: три настоящие карточки из каталога, уложенные стопкой.
+           Целиком скрыта от скринридера — ровно эти же карточки лежат ниже
+           в каталоге, и читать их дважды незачем. inert вдобавок к aria-hidden:
+           он убирает поддерево и из порядка табуляции, и из режима обзора.
+           Ссылок и заголовков внутри намеренно нет — рисуются span и p. -->
+      <div class="hero__stack" id="hero-stack" aria-hidden="true" inert></div>
+
     </div>
   </div>
 
-  <!-- ═══════════════════════ ЛЕНТА ПАРТНЁРОВ ═══════════════════════ -->
-  <div class="ticker" role="group" aria-label="Партнёры каталога">
+  <!-- ═══════════════════════ ЛЕНТА ЛОГОТИПОВ ═══════════════════════ -->
+  <div class="marquee" role="group" aria-label="Банки и МФО в каталоге">
     <!-- Кнопка стоит в разметке перед лентой: до движущегося содержимого
          с клавиатуры нужно добраться раньше, чем оно уедет. Визуально её
          возвращает под ленту order в CSS. -->
-    <button type="button" class="ticker__toggle" id="ticker-toggle">
+    <button type="button" class="marquee__toggle" id="ticker-toggle">
       Остановить движение
     </button>
-    <div class="ticker__box" id="ticker-box">
-      <ul class="ticker__track" id="ticker" role="list"><!-- из data.js --></ul>
+    <div class="marquee__box" id="ticker-box">
+      <ul class="marquee__track" id="ticker" role="list"><!-- из data.js --></ul>
     </div>
   </div>
 
   <!-- ═══════════════════════ КАТАЛОГ ═══════════════════════ -->
   <section class="section" id="offers" aria-labelledby="offers-title" tabindex="-1">
     <div class="shell">
-      <p class="meta-row meta-row--section" aria-hidden="true">
-        <span class="meta">02 / Каталог</span>
-        <span class="meta">Обновляется вручную</span>
-      </p>
-
       <div class="section__head">
+        <p class="eyebrow eyebrow--section">Каталог</p>
         <h2 class="section__title" id="offers-title">Предложения</h2>
         <p class="section__lead">
           Каждая карточка ведёт на официальный сайт банка или МФО.
@@ -154,16 +134,39 @@
         </p>
       </div>
 
-      <div class="filters">
+      <!-- Липкая панель: поиск и разделы всегда под рукой при прокрутке.
+           Высоту панели скрипт меряет и кладёт в --stick-h, чтобы якоря и
+           фокус не уезжали под неё (2.4.11). -->
+      <div class="toolbar" id="toolbar">
+        <!-- <search>, а не <form>: отправлять некуда, а единственное поле
+             внутри формы даёт неявную отправку — Enter перезагрузил бы
+             страницу -->
+        <search class="toolbar__search">
+          <!-- Подпись видимая: это фильтр в теле каталога, а не лупа в шапке,
+               и плейсхолдер её не заменяет (3.3.2) -->
+          <label class="toolbar__label" for="offers-search">Поиск</label>
+          <span class="toolbar__field">
+            <svg class="toolbar__icon" viewBox="0 0 20 20" aria-hidden="true" focusable="false"><circle cx="9" cy="9" r="6" fill="none" stroke="currentColor" stroke-width="1.8"/><path d="M13.5 13.5 17 17" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"/></svg>
+            <input class="toolbar__input" type="search" id="offers-search" name="q"
+                   placeholder="Банк или продукт" autocomplete="off"
+                   autocapitalize="none" spellcheck="false" enterkeyhint="search">
+            <!-- Крестик рисует CSS, имя кнопке даёт скрытая строка: текстовый
+                 символ «×» скринридер прочитал бы вслух вдобавок к имени -->
+            <button type="button" class="toolbar__clear" id="search-clear" hidden>
+              <span class="visually-hidden">Очистить поиск</span>
+            </button>
+          </span>
+        </search>
+
         <div class="filters__row" role="group" aria-label="Фильтр по разделам" id="filters"><!-- из data.js --></div>
-        <!-- Видимый счётчик и озвучиваемый статус — разные узлы. Живой регион
-             стоит в разметке с самого начала и пуст, пишется только в ответ на
-             нажатие фильтра: тогда нечего глушить при загрузке страницы. -->
-        <p class="filters__count" id="offers-count"></p>
-        <p class="visually-hidden" id="offers-status" role="status" aria-atomic="true"></p>
       </div>
 
-      <p class="offers__note">Все предложения открываются в новой вкладке на сайте партнёра.</p>
+      <!-- Видимый счётчик и озвучиваемый статус — разные узлы. Живой регион
+           стоит в разметке с самого начала и пуст, пишется только в ответ на
+           действие человека: тогда нечего глушить при загрузке страницы. -->
+      <p class="offers__count" id="offers-count"></p>
+      <p class="visually-hidden" id="offers-status" role="status" aria-atomic="true"></p>
+
       <p class="offers__pending" id="offers-pending" hidden></p>
 
       <ul class="offers" id="offers-grid" role="list"><!-- из data.js --></ul>
@@ -176,12 +179,8 @@
   <!-- ═══════════════════════ КАК ЭТО РАБОТАЕТ ═══════════════════════ -->
   <div class="section section--alt" id="how" tabindex="-1">
     <div class="shell">
-      <p class="meta-row meta-row--section" aria-hidden="true">
-        <span class="meta">03 / Процесс</span>
-        <span class="meta">4 шага</span>
-      </p>
-
       <div class="section__head">
+        <p class="eyebrow eyebrow--section">Процесс</p>
         <h2 class="section__title">Как это работает</h2>
         <p class="section__lead">Без регистрации, без анкет на нашей стороне и без ожидания ответа.</p>
       </div>
@@ -190,22 +189,22 @@
         <li class="step reveal">
           <!-- Номер нарисован крупно для глаза и скрыт от скринридера:
                порядок уже несёт сам <ol> («2 из 4») -->
-          <p class="step__num" aria-hidden="true">01</p>
+          <p class="step__num" aria-hidden="true">1</p>
           <h3 class="step__title">Выбираете раздел</h3>
-          <p class="step__text">Займ, дебетовая или кредитная карта, кредит наличными — фильтр над каталогом сузит список.</p>
+          <p class="step__text">Займ, дебетовая или кредитная карта, кредит наличными. Или ищете банк по названию.</p>
         </li>
         <li class="step reveal">
-          <p class="step__num" aria-hidden="true">02</p>
+          <p class="step__num" aria-hidden="true">2</p>
           <h3 class="step__title">Сравниваете условия</h3>
-          <p class="step__text">Все предложения лежат в одном списке одинаковыми карточками — видно, чем они отличаются.</p>
+          <p class="step__text">Все предложения лежат одинаковыми карточками — видно, чем они отличаются.</p>
         </li>
         <li class="step reveal">
-          <p class="step__num" aria-hidden="true">03</p>
+          <p class="step__num" aria-hidden="true">3</p>
           <h3 class="step__title">Переходите к партнёру</h3>
           <p class="step__text">Оформление происходит на официальном сайте банка или МФО. Свои данные вы вводите только там.</p>
         </li>
         <li class="step reveal">
-          <p class="step__num" aria-hidden="true">04</p>
+          <p class="step__num" aria-hidden="true">4</p>
           <h3 class="step__title">Получаете решение</h3>
           <p class="step__text">Ответ приходит от банка или МФО. Деньги — на карту, карта — курьером или в приложении.</p>
         </li>
@@ -216,25 +215,30 @@
   <!-- ═══════════════════════ ПОЧЕМУ ЗДЕСЬ ═══════════════════════ -->
   <div class="section" id="trust" tabindex="-1">
     <div class="shell">
-      <p class="meta-row meta-row--section" aria-hidden="true">
-        <span class="meta">04 / Принципы</span>
-        <span class="meta">Честно о том, как всё устроено</span>
-      </p>
-
       <div class="section__head">
+        <p class="eyebrow eyebrow--section">Принципы</p>
         <h2 class="section__title">Почему здесь</h2>
       </div>
 
       <ul class="cards" role="list">
         <li class="card reveal">
+          <span class="card__icon" aria-hidden="true">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><path d="M12 3l7 3v6c0 4.2-2.8 7.7-7 9-4.2-1.3-7-4.8-7-9V6l7-3z"/><path d="M9 12l2 2 4-4"/></svg>
+          </span>
           <h3 class="card__title">Только официальные партнёры</h3>
           <p class="card__text">В сводке — банки с лицензией ЦБ и МФО из государственного реестра Банка России. Никаких «серых» посредников.</p>
         </li>
         <li class="card reveal">
+          <span class="card__icon" aria-hidden="true">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><path d="M20.5 12.5l-8 8-9-9V4h7.5l9.5 8.5z"/><circle cx="8" cy="8" r="1.6"/></svg>
+          </span>
           <h3 class="card__title">Условия те же, что напрямую</h3>
           <p class="card__text">Наценки нет. Партнёр платит нам за переход, а вы получаете стандартные условия банка — иногда с бонусом за оформление по ссылке.</p>
         </li>
         <li class="card reveal">
+          <span class="card__icon" aria-hidden="true">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><rect x="4" y="10" width="16" height="10" rx="2.5"/><path d="M8 10V7a4 4 0 0 1 8 0v3"/></svg>
+          </span>
           <h3 class="card__title">Мы не собираем ваши данные</h3>
           <p class="card__text">Паспорт и реквизиты вы вводите на сайте партнёра. У нас нет ни анкет, ни базы клиентов, ни колл-центра.</p>
         </li>
@@ -245,12 +249,8 @@
   <!-- ═══════════════════════ ВОПРОСЫ ═══════════════════════ -->
   <section class="section section--alt" id="faq" aria-labelledby="faq-title" tabindex="-1">
     <div class="shell shell--narrow">
-      <p class="meta-row meta-row--section" aria-hidden="true">
-        <span class="meta">05 / Вопросы</span>
-        <span class="meta">6 ответов</span>
-      </p>
-
       <div class="section__head">
+        <p class="eyebrow eyebrow--section">Вопросы</p>
         <h2 class="section__title" id="faq-title">Частые вопросы</h2>
       </div>
 
@@ -336,101 +336,99 @@
   <!-- ═══════════════════════ ЗАЯВКА ═══════════════════════ -->
   <section class="section" id="lead" aria-labelledby="lead-title" tabindex="-1">
     <div class="shell shell--narrow">
-      <p class="meta-row meta-row--section" aria-hidden="true">
-        <span class="meta">06 / Заявка</span>
-        <span class="meta">Ответ в течение дня</span>
-      </p>
+      <div class="lead-box">
+        <div class="section__head">
+          <p class="eyebrow eyebrow--section">Заявка</p>
+          <h2 class="section__title" id="lead-title">Не нашли подходящее — подберём</h2>
+          <p class="section__lead">
+            Опишите задачу: нужен займ, карта под кэшбэк или карта с длинным беспроцентным периодом.
+            Ответим в телеграм и пришлём два-три варианта.
+          </p>
+          <p class="section__note">
+            Все поля обязательны, кроме отмеченных словом «необязательно».
+          </p>
+        </div>
 
-      <div class="section__head">
-        <h2 class="section__title" id="lead-title">Не нашли подходящее — подберём</h2>
-        <p class="section__lead">
-          Опишите задачу: нужен займ, карта под кэшбэк или карта с длинным беспроцентным периодом.
-          Ответим в телеграм и пришлём два-три варианта.
-        </p>
-        <p class="section__note">
-          Все поля обязательны, кроме отмеченных словом «необязательно».
-        </p>
+        <noscript>
+          <p class="offers__pending">
+            Форма работает на JavaScript: она собирает готовое сообщение и открывает чат
+            в телеграме. Если скрипты выключены — напишите нам в телеграм напрямую,
+            ник указан в шапке чата, куда ведут все кнопки сайта.
+          </p>
+        </noscript>
+
+        <!-- method="post" не декорация: при отказе JS форма не должна унести имя
+             и телефон в адресную строку, историю браузера и логи через GET -->
+        <form class="form" id="lead-form" method="post" action="" novalidate aria-labelledby="lead-title">
+          <!-- Без role="alert": сюда уводится фокус, а живой регион вместе с
+               переводом фокуса дают наложение речи. Объявление обеспечивает
+               сам фокус. -->
+          <div class="form__summary" id="form-summary" tabindex="-1" hidden>
+            <h3 class="form__summary-title" id="form-summary-title">Форма не отправлена</h3>
+            <ul id="form-summary-list" role="list"></ul>
+          </div>
+
+          <div class="field">
+            <label class="field__label" for="lead-name">Как к вам обращаться</label>
+            <input class="field__input" type="text" id="lead-name" name="name" autocomplete="given-name"
+                   required aria-describedby="lead-name-hint lead-name-error">
+            <p class="field__hint" id="lead-name-hint">Имя или ник — минимум две буквы</p>
+            <p class="field__error" id="lead-name-error" hidden></p>
+          </div>
+
+          <div class="field">
+            <!-- autocomplete здесь намеренно off: поле принимает и телеграм-ник,
+                 и телефон, а токен tel объявил бы его телефонным — браузер
+                 подставил бы номер в поле, куда человек собирался вписать @ник -->
+            <label class="field__label" for="lead-contact">Телеграм или телефон</label>
+            <input class="field__input" type="text" id="lead-contact" name="contact"
+                   autocomplete="off" autocapitalize="none" spellcheck="false"
+                   required aria-describedby="lead-contact-hint lead-contact-error">
+            <p class="field__hint" id="lead-contact-hint">Например: @eduard или +7 900 000-00-00</p>
+            <p class="field__error" id="lead-contact-error" hidden></p>
+          </div>
+
+          <div class="field">
+            <label class="field__label" for="lead-topic">Что интересует</label>
+            <select class="field__input field__input--select" id="lead-topic" name="topic"
+                    required aria-describedby="lead-topic-error">
+              <option value="">Выберите из списка</option>
+              <option value="loans">Займ на карту</option>
+              <option value="debit">Дебетовая карта</option>
+              <option value="credit">Кредитная карта</option>
+              <option value="cash">Кредит наличными</option>
+              <option value="other">Другое, нужна консультация</option>
+              <option value="partner">Сотрудничество, размещение предложения</option>
+            </select>
+            <p class="field__error" id="lead-topic-error" hidden></p>
+          </div>
+
+          <div class="field">
+            <label class="field__label" for="lead-comment">Комментарий <span class="field__optional">(необязательно)</span></label>
+            <textarea class="field__input field__input--area" id="lead-comment" name="comment" rows="4"></textarea>
+          </div>
+
+          <div class="field field--check">
+            <input class="field__check" type="checkbox" id="lead-consent" name="consent"
+                   required aria-describedby="lead-consent-error">
+            <label class="field__checklabel" for="lead-consent">
+              Я даю согласие на обработку имени и контакта, чтобы получить ответ на заявку
+            </label>
+            <p class="field__error" id="lead-consent-error" hidden></p>
+          </div>
+
+          <button class="btn btn--dark btn--wide btn--lg" type="submit" aria-describedby="lead-submit-hint">
+            Отправить заявку
+            <svg class="btn__arrow" viewBox="0 0 16 16" aria-hidden="true" focusable="false"><path d="M2 8h11M9 4l4 4-4 4" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"/></svg>
+          </button>
+          <p class="field__hint" id="lead-submit-hint">Откроет чат в телеграме в новой вкладке с готовым сообщением.</p>
+
+          <!-- tabindex без role="status": внутри блока есть ссылка, до которой
+               надо добраться, — сюда уводится фокус, и живой регион дал бы
+               второй канал речи поверх первого -->
+          <p class="form__success" id="form-success" tabindex="-1" hidden></p>
+        </form>
       </div>
-
-      <noscript>
-        <p class="offers__pending">
-          Форма работает на JavaScript: она собирает готовое сообщение и открывает чат
-          в телеграме. Если скрипты выключены — напишите нам в телеграм напрямую,
-          ник указан в шапке чата, куда ведут все кнопки сайта.
-        </p>
-      </noscript>
-
-      <!-- method="post" не декорация: при отказе JS форма не должна унести имя
-           и телефон в адресную строку, историю браузера и логи через GET -->
-      <form class="form" id="lead-form" method="post" action="" novalidate aria-labelledby="lead-title">
-        <!-- Без role="alert": сюда уводится фокус, а живой регион вместе с
-             переводом фокуса дают наложение речи. Объявление обеспечивает
-             сам фокус. -->
-        <div class="form__summary" id="form-summary" tabindex="-1" hidden>
-          <h3 class="form__summary-title" id="form-summary-title">Форма не отправлена</h3>
-          <ul id="form-summary-list" role="list"></ul>
-        </div>
-
-        <div class="field">
-          <label class="field__label" for="lead-name">Как к вам обращаться</label>
-          <input class="field__input" type="text" id="lead-name" name="name" autocomplete="given-name"
-                 required aria-describedby="lead-name-hint lead-name-error">
-          <p class="field__hint" id="lead-name-hint">Имя или ник — минимум две буквы</p>
-          <p class="field__error" id="lead-name-error" hidden></p>
-        </div>
-
-        <div class="field">
-          <!-- autocomplete здесь намеренно off: поле принимает и телеграм-ник,
-               и телефон, а токен tel объявил бы его телефонным — браузер
-               подставил бы номер в поле, куда человек собирался вписать @ник -->
-          <label class="field__label" for="lead-contact">Телеграм или телефон</label>
-          <input class="field__input" type="text" id="lead-contact" name="contact"
-                 autocomplete="off" autocapitalize="none" spellcheck="false"
-                 required aria-describedby="lead-contact-hint lead-contact-error">
-          <p class="field__hint" id="lead-contact-hint">Например: @eduard или +7 900 000-00-00</p>
-          <p class="field__error" id="lead-contact-error" hidden></p>
-        </div>
-
-        <div class="field">
-          <label class="field__label" for="lead-topic">Что интересует</label>
-          <select class="field__input field__input--select" id="lead-topic" name="topic"
-                  required aria-describedby="lead-topic-error">
-            <option value="">Выберите из списка</option>
-            <option value="loans">Займ на карту</option>
-            <option value="debit">Дебетовая карта</option>
-            <option value="credit">Кредитная карта</option>
-            <option value="cash">Кредит наличными</option>
-            <option value="other">Другое, нужна консультация</option>
-            <option value="partner">Сотрудничество, размещение предложения</option>
-          </select>
-          <p class="field__error" id="lead-topic-error" hidden></p>
-        </div>
-
-        <div class="field">
-          <label class="field__label" for="lead-comment">Комментарий <span class="field__optional">(необязательно)</span></label>
-          <textarea class="field__input field__input--area" id="lead-comment" name="comment" rows="4"></textarea>
-        </div>
-
-        <div class="field field--check">
-          <input class="field__check" type="checkbox" id="lead-consent" name="consent"
-                 required aria-describedby="lead-consent-error">
-          <label class="field__checklabel" for="lead-consent">
-            Я даю согласие на обработку имени и контакта, чтобы получить ответ на заявку
-          </label>
-          <p class="field__error" id="lead-consent-error" hidden></p>
-        </div>
-
-        <button class="btn btn--dark btn--wide" type="submit" aria-describedby="lead-submit-hint">
-          Отправить заявку
-          <svg class="btn__arrow" viewBox="0 0 16 16" aria-hidden="true" focusable="false"><path d="M2 8h11M9 4l4 4-4 4" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/></svg>
-        </button>
-        <p class="field__hint" id="lead-submit-hint">Откроет чат в телеграме в новой вкладке с готовым сообщением.</p>
-
-        <!-- tabindex без role="status": внутри блока есть ссылка, до которой
-             надо добраться, — сюда уводится фокус, и живой регион дал бы
-             второй канал речи поверх первого -->
-        <p class="form__success" id="form-success" tabindex="-1" hidden></p>
-      </form>
     </div>
   </section>
 
@@ -470,7 +468,7 @@
 <!-- Каталог с сервера идёт мимо кеша (data.php), чтобы правки из панели были
      видны сразу. Нет PHP — работает обычный файл. -->
 <script src="data.php"></script>
-<script>if(typeof OFFERS==="undefined"){document.write('<script src="data.js?v=1"><\/script>');}</script>
-<script src="script.js?v=1"></script>
+<script>if(typeof OFFERS==="undefined"){document.write('<script src="data.js?v=2"><\/script>');}</script>
+<script src="script.js?v=2"></script>
 </body>
 </html>
